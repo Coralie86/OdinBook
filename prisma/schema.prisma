@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+  previewFeatures = ["strictUndefinedChecks"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  email String @unique
+  password String
+  username String
+  image String?
+  posts Post[]
+  comments Comment[]
+  likes Like[]
+  follows Follow[] @relation("follows")
+  followers Follow[] @relation("followers")
+}
+
+model Post {
+  id Int @id @default(autoincrement())
+  content String
+  timestamp DateTime @default(now())
+  author User @relation(fields: [authorId], references: [id])
+  authorId Int
+  comments Comment[]
+  likes Like[]
+}
+
+model Comment {
+  id Int @id @default(autoincrement())
+  timestamp DateTime @default(now())
+  description String
+  isEdited Boolean @default(false)
+  writer User @relation(fields: [writerId], references: [id])
+  writerId Int
+  post Post @relation(fields: [postId], references: [id])
+  postId Int
+}
+
+model Like {
+  userId Int
+  postId Int
+
+  user User @relation(fields: [userId], references: [id])
+  post Post @relation(fields: [postId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@id([userId, postId])
+}
+
+model Follow {
+  userId Int
+  userFollowedId Int
+
+  followers User @relation("followers", fields: [userFollowedId], references: [id])
+  follows User @relation("follows", fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  isAccepted Boolean @default(false)
+  
+  @@id([userId, userFollowedId])
+}
+
