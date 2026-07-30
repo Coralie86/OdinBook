@@ -6,8 +6,17 @@ const cookieParser = require("cookie-parser");
 const postRouter = require("./routers/postRouter.js")
 const commentRouter = require("./routers/commentRouter.js")
 const userRouter = require("./routers/userRouter.js")
+const cors = require("cors");
 
 const app = express();
+
+const corsOptions = {
+    origin:"http://localhost:5173",
+    optionsSuccessStatus: 200,
+    credentials: true
+}
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
