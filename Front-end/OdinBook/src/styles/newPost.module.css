@@ -1,0 +1,89 @@
+@font-face {
+    font-family: "handwritten";
+    src: local("CoveredByYourGrace-Regular"), url("../font/CoveredByYourGrace-Regular.ttf") format("truetype");
+}
+
+.richText {
+    justify-self: flex-start;
+    width: 40vw;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+:global(.ql-container) {
+    border: none;
+    background: transparent;
+    width: 100%;
+    height: 60vh;
+    width: 40vw;
+}
+
+:global(.ql-container.ql-snow) {
+    background: #D5AF73;
+    border: none;
+    box-shadow:
+        inset 0 0 15px rgba(90,60,20,.2),
+        0 6px 12px rgba(0,0,0,.25);
+
+    font-family: "handwritten";
+    font-size: 28px;
+    color: #2C1B12;
+
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    clip-path: polygon(
+        0% 0%, 100% 0%, 100% 95%, 98% 98%, 96% 96%, 94% 99%, 92% 97%, 90% 100%, 88% 96%, 86% 99%, 84% 97%, 82% 98%, 80% 96%,
+         78% 98%, 76% 96%, 74% 99%, 72% 96%, 70% 99%, 68% 95%, 66% 100%, 64% 96%, 62% 99%, 60% 95%, 58% 98%, 56% 94%,
+          54% 99%, 52% 96%, 50% 98%, 48% 98%, 46% 96%, 44% 99%, 42% 96%, 40% 99%, 38% 95%, 36% 100%, 34% 96%, 32% 99%,
+           30% 95%, 28% 98%, 26% 94%, 24% 99%, 22% 96%, 20% 98%, 18% 98%, 16% 94%, 14% 99%, 12% 96%, 10% 98%, 8% 98%, 
+           6% 94%, 4% 99%, 2% 96%, 0% 98%
+    );
+}
+
+:global(.ql-toolbar.ql-snow) {
+    width: 100%;
+    border: none;
+    background-color: #2C1B12;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+
+:global(.ql-stroke), :global(.ql-formats) {
+    stroke: #b1b0af !important;
+}
+
+:global(.ql-snow .ql-picker) {
+    color: #b1b0af;
+}
+
+:global(.ql-snow .ql-picker-label::before) {
+    color: #b1b0af;
+}
+
+:global(.ql-snow.ql-toolbar button:hover .ql-stroke),
+:global(.ql-snow .ql-toolbar button:hover .ql-stroke) {
+    stroke: #D4AF37 !important;
+}
+
+:global(.ql-snow.ql-toolbar button:hover .ql-fill),
+:global(.ql-snow .ql-toolbar button:hover .ql-fill) {
+    fill: #D4AF37 !important;
+}
+
+:global(.ql-snow .ql-picker:hover .ql-picker-label .ql-stroke) {
+    stroke: #D4AF37 !important;
+}
+
+:global(.ql-snow .ql-picker:hover .ql-picker-label::before) {
+    color: #D4AF37;
+}
+
+
+.btnNewNotice {
+    /* align-self: flex-end; */
+    margin-top: 30px;
+    padding: 8px 10px;
+}

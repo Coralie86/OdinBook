@@ -1,0 +1,50 @@
+.filters {
+    display: flex;
+    gap: 10px;
+}
+
+.pngAsSvg {
+    width: 20px;
+    height:auto;
+}
+
+.icon {
+    background-color: #E4C28B;
+    border-radius: 10px;
+}
+
+.filterLiked, .filterFollowed {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+button {
+    background-color: rgb(56, 41, 9);
+    color: rgb(173, 170, 170);
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid rgb(173, 170, 170);
+    border-radius: 10px;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: rgb(104, 77, 18);
+}
+
+.listuser {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(25em, 1fr));
+    margin-top: 30px;
+    justify-items: center;
+}
+
+.filterUsers {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

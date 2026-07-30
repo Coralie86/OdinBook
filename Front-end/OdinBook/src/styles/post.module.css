@@ -1,0 +1,83 @@
+@font-face {
+    font-family: "Western";
+    src: local("Cowboy Movie"), url("../font/Cowboy\ Movie.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "WesternBody";
+    src: local("Smokum-Regular"), url("../font/Smokum-Regular.ttf") format("truetype");
+}
+
+.post {
+    background-color: #f4e8c5;
+    background: top center / contain no-repeat url("../assets/texturePost.png");
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    box-shadow: 0px 5px 10px 5px rgb(80, 52, 9);    
+    border-bottom-left-radius: 20px 115px;
+    border-bottom-right-radius: 155px 30px;
+}
+
+.post:hover {
+    /* transform: scale(1.05); */
+    box-shadow: 0px 5px 10px 5px rgb(245, 202, 137); 
+}
+
+
+.textPost {
+    overflow-wrap: break-word;
+    width: 100%;
+    padding: 10px;
+}
+
+.textPost h1 {
+    font-family: "Western";
+    font-size: 50px;
+    text-align: center;
+}
+
+.textPost p {
+    font-family: "WesternBody";
+    font-size: 30px;
+    text-align: justify;
+    padding: 10px 40px;
+}
+
+/* .timetampPost {
+    justify-self: right;
+} */
+
+.authorPost {
+    display: flex;
+    gap:10px;
+    align-items: center;
+}
+
+p {
+    margin: 0px;
+    width: auto;
+}
+
+.authorPost {
+    display: flex;
+    gap:10px;
+    align-items: center;
+}
+
+.icon:hover {
+    cursor: pointer;
+    transform: scale(1.4);
+}
+
+.timetampPost {
+    display: flex;
+    justify-content: space-between;
+}
+
+.pngAsSvg {
+    width: 30px;
+    height:auto;
+}

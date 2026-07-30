@@ -1,0 +1,103 @@
+@font-face {
+    font-family: "Western";
+    src: local("Cowboy Movie"), url("../font/Cowboy\ Movie.ttf") format("truetype");
+}
+
+
+@font-face {
+    font-family: "handwritten";
+    src: local("CoveredByYourGrace-Regular"), url("../font/CoveredByYourGrace-Regular.ttf") format("truetype");
+}
+
+.iconEdit {
+    height: 3em;
+    width: auto;
+    fill: #fffdfc;
+}
+
+.iconEdit:hover {
+    cursor: pointer;
+    background-color: rgba(235, 233, 231, 0.486);
+    box-shadow: 0px 0px 15px 0px rgb(235, 233, 231);
+    border-radius: 10px;
+}
+
+.settingsContainer {
+    display: grid;
+    grid-template-rows: 0.25fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    gap: 5vh;
+}
+
+.profile {
+    grid-column: 1 ;
+    grid-row: 2 ;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    align-items: center;
+    padding-bottom: 50px;
+    border-bottom: 3px solid #fdfbfa;
+}
+
+.inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.passwordUpdate {
+    grid-column: 1 ;
+    grid-row: 3 ;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.formPassword {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.headersProfile {
+    grid-column: 1 ;
+    grid-row: 1 ;
+    font-family: "Western";
+    color: #c09c31;
+    font-size:clamp(2rem,10vw,4rem);
+    letter-spacing:5px;
+    text-shadow:
+    4px 4px 0 rgba(12, 12, 12, 0.74),
+    -2px -2px 0 rgba(12, 12, 12, 0.74);
+    margin: 0;
+}
+
+.imgProfile {
+    height: 20vh;
+    width: 20vh;
+    border: 1px solid white;
+}
+
+.submitBtn {
+    width: 15em;
+    padding: 5px 0px;
+    /* color: white; */
+}
+
+.usernameEmail {
+    background-color: rgb(56, 41, 9);
+    padding: 10px 30px;
+    color: white;
+    /* letter-spacing:1px; */
+    border-radius: 10px;
+    border: 2px solid gray;
+    font-size: 18px;
+    font-family: "Arial";
+}
+
+.edited {
+    font-family: "Arial";
+    /* letter-spacing:1px; */
+    font-size: 18px;
+}

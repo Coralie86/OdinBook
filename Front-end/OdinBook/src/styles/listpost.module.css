@@ -1,0 +1,59 @@
+.listpost {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    margin: 10px;
+    padding: 20px;
+    width: 30vw;
+    height: auto;
+}
+
+.filters {
+    display: flex;
+    gap: 30px;
+}
+
+.filterLiked {
+    display:flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filterFollowed{
+    display:flex;
+    align-items: center;
+    gap: 10px;
+}
+
+button {
+    background-color: rgb(56, 41, 9);
+    color: rgb(173, 170, 170);
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid rgb(173, 170, 170);
+    border-radius: 10px;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: rgb(104, 77, 18);
+}
+
+.searchcontainer input {
+    border: 1px solid rgb(173, 170, 170);
+}
+
+.searchcontainer input:hover {
+    background-color: rgb(104, 77, 18);
+}
+
+.pngAsSvg {
+    width: 20px;
+    height:auto;
+}
+
+.icon {
+    background-color: #E4C28B;
+    border-radius: 10px;
+}

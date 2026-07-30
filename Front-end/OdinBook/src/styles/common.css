@@ -1,0 +1,10 @@
+
+#root {
+  position: relative;
+  min-height: 100vh;
+
+  background-image: url("../assets/wood-material-background-wallpaper-texture-concept_53876-42925.avif");
+  background-repeat: repeat-y;
+  background-position: top center;
+  background-size: 100% auto;
+}
