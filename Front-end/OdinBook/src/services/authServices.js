@@ -54,3 +54,20 @@ export const logout = async () => {
 
     return data
 }
+
+export const refreshToken = async () => {
+    const response = await fetch(`${API_URL}/auth/refresh-token`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+        }
+    })
+
+    const data = await response.json();
+
+    if(!response.ok){
+        return data.errors
+    }
+    return data
+}

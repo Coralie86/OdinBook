@@ -1,24 +1,82 @@
-import { useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import style from "../styles/settings.module.css"
 import { CiEdit } from "react-icons/ci";
 import { TiTickOutline } from "react-icons/ti";
 import { TiCancel } from "react-icons/ti";
+import { AuthContext } from '../services/authContext';
+import { getUserInfo, updateUserInfo, updatePassword} from "../services/settingsServices.js"
+import {logout} from "../services/authServices.js"
+import { useNavigate } from 'react-router-dom';
 
 function Settings() {
   const [isEditable, setIsEditable] = useState(false);
+  const {auth, setAuth} = useContext(AuthContext);
+  const [success, setSuccess] = useState(false);
+  const [profile, setProfile] = useState({
+    id: null,
+    username: null,
+    email: null
+  });
+  const navigate = useNavigate();
 
-  const username="usernameValue";
-  const email="emailValue";
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function getuserProfile() {
+      try {
+        const response = await getUserInfo(auth);
+        
+        setProfile({
+          ...profile,
+          email: response.email,
+          username: response.username,
+          image: response.image
+        });
+      } catch(err) {
+        console.log(err)
+      }
+    }
+
+    getuserProfile();
+    return () => {
+      controller.abort();
+    }
+  }, [])
+
+  const handleSave = async () => {
+    const username = document.getElementById("username").value;
+    const email = document.getElementById("email").value;
+    
+    try {
+      await updateUserInfo(auth, {username: username, email: email});
+      setIsEditable(false);
+
+      // Force re-login
+      localStorage.removeItem("accessToken");
+      await logout();
+      navigate('/');
+
+    } catch(err){
+      console.log(err)
+    }    
+  }  
+
+  const handleChangePassword = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+
+    try {
+      await updatePassword(auth, formData);
+      setSuccess(true);
+    } catch(err) {
+      console.log(err)
+    }
+  }
 
   const handleFiledEditable = () => {
     setIsEditable(true);
-  }
-
-  const handleChangePassword = () => {
-  }
-
-  const handleSave = () => {
-    setIsEditable(false);
   }
 
   const handleCancel = () => {
@@ -30,18 +88,18 @@ function Settings() {
       <h1 className={style.headersProfile}>SHERIFF'S PROFILE</h1>
       <div className={style.profile}>
         <div id="imagePerso">
-          <img className={style.imgProfile} src="null" />
+          <img className={style.imgProfile} src={profile.image} />
         </div>
         <div className={style.inputs}>
           {isEditable ?
           <>
-            <input className={style.edited} name="username" defaultValue={username} required/>
-            <input className={style.edited} name="email" defaultValue={email} required/>
+            <input id="username" className={style.edited} name="username" defaultValue={profile.username} required/>
+            <input id="email" className={style.edited} name="email" defaultValue={profile.email} required/>
           </>
           : 
           <div className={style.usernameEmail}>
-            <div >Username: {username}</div>
-            <div >Email: {email}</div>
+            <div >Username: {profile.username}</div>
+            <div >Email: {profile.email}</div>
           </div>
           }
           
@@ -58,11 +116,14 @@ function Settings() {
       </div>
       <div className={style.passwordUpdate} >
         <h1 className={style.headersProfile}>UPDATE YOUR PASSWORD</h1>
-        <form className={style.formPassword} method="post" onSubmit={handleChangePassword}>
+        <form className={style.formPassword} method="put" onSubmit={handleChangePassword}>
           <input name="password" id="password" type="password" required/>
           <input name="passwordConfirmation" id="passwordConfirmation" type="password" required/>
           <button className={style.submitBtn} type="submit" >UPDATE PASSWORD</button>
         </form>
+        {success ? (
+          <div className={style.success}>Password successfully updated</div>
+        ) : <></>}
       </div>
     </div>
   )

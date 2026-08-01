@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import style from "../styles/connect.module.css"
 import wanted from "../assets/wanted.png"
 import { Link, useNavigate } from 'react-router-dom'
 import {register, login} from "../services/authServices.js"
+import { AuthContext } from '../services/authContext.jsx'
 
 function Connect() {
     const navigate = useNavigate();
     const [success, setSuccess] = useState(false);
+    const {auth, setAuth} = useContext(AuthContext)
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -18,6 +20,7 @@ function Connect() {
             const res = await login(formData);
             const token = res.accessToken;
             localStorage.setItem('accessToken', token);
+            setAuth({...auth, accessToken: token})
             navigate("/app");
         } catch(err){
             console.log(err)

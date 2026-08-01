@@ -98,6 +98,10 @@
 
 .edited {
     font-family: "Arial";
-    /* letter-spacing:1px; */
     font-size: 18px;
+}
+
+.success {
+    color: white;
+    font-size: 20px;
 }

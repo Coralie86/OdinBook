@@ -31,3 +31,13 @@
     align-items: center;
     gap: 10px;
 }
+
+.accRej {
+    display: flex;
+    gap: 10px;
+}
+
+.userContent button {
+    font-size: 12px;
+    margin-top: 10px;
+}
