@@ -289,14 +289,31 @@ async function acceptFollow(userId, userFollowedId) {
 }
 
 async function unfollow(userId, userFollowedId) {
-    const follow = await prisma.follow.delete({
+    const follow = await prisma.follow.findFirst({
         where: {
-            userId_userFollowedId: {
-                userId: userId,
-                userFollowedId: userFollowedId,
-            }
+            OR: [
+                {
+                    userId: userId,
+                    userFollowedId: userFollowedId,
+                },
+                {
+                    userId: userFollowedId,
+                    userFollowedId: userId,
+                }
+            ]
         }
-    })
+    });
+
+    if(follow) {
+        await prisma.follow.delete({
+            where: {
+                userId_userFollowedId: {
+                    userId: follow.userId,
+                    userFollowedId: follow.userFollowedId,
+                },
+            }
+        })
+    }
 
     return follow
 }
@@ -309,7 +326,6 @@ async function updateProfile(userId, newUser){
         data:{
             email: newUser.email,
             username: newUser.username,
-            image: newUser.image,
         }
     })
 

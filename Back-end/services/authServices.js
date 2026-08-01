@@ -9,6 +9,15 @@ const verifyToken = (token, secret) =>{
     return jwt.verify(token, secret)
 }
 
+const checkUserExists = async (payload) => {
+    const user = await prisma.user.findUnique({
+        where: {
+            email: payload.email,
+        },
+    })
+    return user;
+}
+
 const loginUser = async (payload) => {
     const user = await prisma.user.findUnique({
         where: {
@@ -18,6 +27,7 @@ const loginUser = async (payload) => {
             email: true,
             id: true,
             image:true,
+            username: true,
         }
     })
     const access_token = generateToken(user, process.env.JWT_SECRET_ACCESS, process.env.JWT_EXPIRESIN_ACCESS);
@@ -37,4 +47,4 @@ const refreshToken = (refreshToken) => {
     return access_token_refreshed
 }
 
-module.exports = {loginUser, refreshToken, verifyToken}
+module.exports = {loginUser, refreshToken, verifyToken, checkUserExists}

@@ -37,7 +37,7 @@ exports.acceptFollowUser = async (req,res,next) => {
     }
 
     try {
-        const followUpdated = await db.acceptFollow(userId, userFollowedId);
+        const followUpdated = await db.acceptFollow(userFollowedId, userId);
         res.status(200).json({message: "Follow has been accepted", follow: followUpdated})
     } catch(err) {
         next(err)
@@ -67,6 +67,7 @@ exports.getMyProfil = async (req,res,next) => {
             id: req.user.id,
             email: req.user.email,
             image: req.user.image,
+            username: req.user.username,
         };
         res.status(200).json(user)
     } catch(err) {
@@ -77,7 +78,6 @@ exports.getMyProfil = async (req,res,next) => {
 exports.updateMyProfil = async (req,res,next) => {
     const newUser = req.body;
     const userId = parseInt(req.user.id);
-    console.log(newUser)
 
     try {
         await db.updateProfile(userId, newUser);

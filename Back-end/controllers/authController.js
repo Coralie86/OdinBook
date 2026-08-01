@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken")
 const db = require("../services/queries.js")
 const auth = require("../services/authServices.js")
+const bcrypt = require("bcryptjs")
 
 exports.register = async (req, res, next) => {
 
@@ -20,13 +21,23 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
 
-    const user = req.body;
+    const userLogged = req.body;
 
-    if(!user.email || !user.password ){
+    if(!userLogged.email || !userLogged.password ){
         return res.status(400).json({message: "Insert an email and a password."})
     }
     
     try {
+        const user = await auth.checkUserExists(userLogged);
+        if(!user){
+            return res.status(401).json({message: "No existing account for this email."})
+        }
+
+        const match = await bcrypt.compare(userLogged.password, user.password);
+        if(!match){
+            return res.status(401).json({message:"Wrong password."})
+        }
+
         const { access_token, refresh_token } = await auth.loginUser(user);
         res.cookie('refreshToken', refresh_token, {
             httpOnly: true,
