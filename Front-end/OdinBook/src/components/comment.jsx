@@ -6,11 +6,13 @@ import { AuthContext } from '../services/authContext'
 import { TiTickOutline } from "react-icons/ti";
 import { TiCancel } from "react-icons/ti";
 import { editComment } from '../services/commentServices';
+import Errors from "./errorpage.jsx"
 
 function Comment({comment, deleteComment}) {
   const [commentInfo, setCommentInfo] = useState(comment)
   const {auth} = useContext(AuthContext);
   const [isEditable, setIsEditable] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   const handleEditInput = async () => {
     setIsEditable(true)
@@ -29,13 +31,14 @@ function Comment({comment, deleteComment}) {
       })
       setIsEditable(false)
     } catch(err) {
-      console.log(err)
+       setErrors(err)
     }
     
   }
 
    const handleCancel = async () => {
     setIsEditable(false)
+    setErrors([]);
   }
 
 
@@ -56,11 +59,16 @@ function Comment({comment, deleteComment}) {
         <FaRegTrashAlt className={style.iconComment} onClick={handleDeleteComment} />
       </div>
       {isEditable ? (
+        <>
         <div className={style.iconComEdited}>
           <input id="commentDescription" defaultValue={commentInfo.description} />
           <TiTickOutline onClick={handleEditComment} className={style.iconCommentEdited} />
           <TiCancel onClick={handleCancel} className={style.iconCommentEdited} />
         </div>
+        {errors.length >0 &&
+                    <Errors errors={errors} />
+                }
+        </>
       ) : (
         <p className={style.commentContent} >{commentInfo.description}</p>
       )}      

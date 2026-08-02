@@ -69,7 +69,7 @@ export const updateUserInfo = async (auth, {username, email, image}) => {
     }
 
     if(!response.ok){
-        throw new Error("internal server error");
+        throw data.errors;
     }
 
     return data
@@ -99,7 +99,7 @@ export const updatePassword = async (auth, form) => {
     }
 
     if(!response.ok){
-        throw new Error("internal server error");
+        throw data.errors
     }
 
     return data

@@ -87,3 +87,12 @@
     margin-top: 30px;
     padding: 8px 10px;
 }
+
+@media (max-width: 1200px) {
+    .richText {
+        width: 95vw;
+    }
+    :global(.ql-container) {
+        width: 95vw;
+    }
+}

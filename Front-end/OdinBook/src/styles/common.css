@@ -1,4 +1,13 @@
 
+html,
+body,
+#root {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
 #root {
   position: relative;
   min-height: 100vh;
@@ -6,5 +15,11 @@
   background-image: url("../assets/wood-material-background-wallpaper-texture-concept_53876-42925.avif");
   background-repeat: repeat-y;
   background-position: top center;
-  background-size: 100% auto;
+  background-size: cover;
+}
+
+@media (max-width: 1250px) {
+  #root {
+   background-size: 100%;
+  }
 }

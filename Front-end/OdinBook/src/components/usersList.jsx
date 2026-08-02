@@ -63,7 +63,7 @@ function UserList() {
   }
 
   return(
-    <div className={style.filterUsers} >
+    <>
       <div className={style.filters}>
         <div className={style.searchcontainer}>
           <input id="searchBar" name="search" type="text" placeholder='Search a text' />
@@ -81,7 +81,7 @@ function UserList() {
           )
         })}
       </div>
-    </div>
+    </>
   )
 }
 

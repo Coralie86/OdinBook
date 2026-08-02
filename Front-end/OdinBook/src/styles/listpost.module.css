@@ -4,7 +4,7 @@
     gap: 60px;
     margin: 10px;
     padding: 20px;
-    width: 30vw;
+    width: 540px;
     height: auto;
 }
 
@@ -48,6 +48,7 @@ button:hover {
     background-color: rgb(104, 77, 18);
 }
 
+
 .pngAsSvg {
     width: 20px;
     height:auto;
@@ -90,4 +91,22 @@ button:hover {
     background-color: rgb(192, 165, 107);
     color: rgb(99, 36, 7);
     border: none;
+}
+
+
+@media (max-width: 1200px) {
+    .listpost {
+        width: 90vw;
+        margin: 0px;
+        padding: 20px 0px;
+    }
+    .filters {
+        display: flex;
+        flex-wrap: wrap ;
+        justify-content: center;
+        margin: 0px 0px;
+    }
+    .searchcontainer input {
+        width: 60vw;
+    }
 }

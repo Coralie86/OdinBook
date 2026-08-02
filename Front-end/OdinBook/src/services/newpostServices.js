@@ -28,7 +28,7 @@ export const createPost = async (auth, content) => {
     }
 
     if(!response.ok){
-        throw new Error("internal server error");
+        throw data.errors;
     }
 
     return data

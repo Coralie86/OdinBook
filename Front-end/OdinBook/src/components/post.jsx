@@ -15,13 +15,15 @@ import { AuthContext } from '../services/authContext'
 import {likePost, unlikePost, addComment} from "../services/postServices.js"
 import {deleteComment} from "../services/commentServices.js"
 import DOMPurify from "dompurify";
+import Errors from "./errorpage.jsx"
 
 function Post({post}) {
     const {auth} = useContext(AuthContext);
     const [comments, setComments] = useState(post.comments);
     const [showComment, setShowComment] = useState(false);
     const [showAddComment, setShowAddComment] = useState(false);
-    const [likedStatus, setLikedStatus] = useState(post.likes.length > 0 ? "liked" : "")
+    const [likedStatus, setLikedStatus] = useState(post.likes.length > 0 ? "liked" : "");
+    const [errors, setErrors] = useState([]);
 
     let status = "toadd";
 
@@ -52,6 +54,7 @@ function Post({post}) {
     const handleDisplayAddComment = () => {
         if(showAddComment){
             setShowAddComment(false);
+            setErrors([]);
         } else {
             setShowAddComment(true);
         }
@@ -85,13 +88,14 @@ function Post({post}) {
             setShowAddComment(false);
             setShowComment(true);
         } catch(err) {
-            console.log(err)
+            setErrors(err)
         }
         
     }
 
     const handleCancel = () => {
         setShowAddComment(false);
+        setErrors([]);
     }
 
     const handleDeleteComment = async (commentId) => {
@@ -128,11 +132,16 @@ function Post({post}) {
             </div>      
         </div>
         {showAddComment && 
+            <>
             <div className={style.addCommentContainer} >
                 <textarea  id="newComment" name="newComment" placeholder="Insert a comment" />
                 <TiTickOutline onClick={handleAddComment} className={style.icon} />
                 <TiCancel onClick={handleCancel} className={style.icon} />
             </div>
+            {errors.length >0 &&
+                    <Errors errors={errors} />
+                }
+            </>
         }
         {showComment && 
             <div className={style.commentContainer}>

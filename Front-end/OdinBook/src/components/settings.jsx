@@ -7,11 +7,16 @@ import { AuthContext } from '../services/authContext';
 import { getUserInfo, updateUserInfo, updatePassword} from "../services/settingsServices.js"
 import {logout} from "../services/authServices.js"
 import { useNavigate } from 'react-router-dom';
+import Errors from "./errorpage.jsx"
 
 function Settings() {
   const [isEditable, setIsEditable] = useState(false);
   const {auth, setAuth} = useContext(AuthContext);
   const [success, setSuccess] = useState(false);
+  const [errors, setErrors] = useState({
+    profile: [],
+    password: []
+  });
   const [profile, setProfile] = useState({
     id: null,
     username: null,
@@ -57,7 +62,10 @@ function Settings() {
       navigate('/');
 
     } catch(err){
-      console.log(err)
+      setErrors({
+        ...errors,
+        profile: err
+      })
     }    
   }  
 
@@ -71,7 +79,10 @@ function Settings() {
       await updatePassword(auth, formData);
       setSuccess(true);
     } catch(err) {
-      console.log(err)
+      setErrors({
+        ...errors,
+        password: err
+      })
     }
   }
 
@@ -95,6 +106,9 @@ function Settings() {
           <>
             <input id="username" className={style.edited} name="username" defaultValue={profile.username} required/>
             <input id="email" className={style.edited} name="email" defaultValue={profile.email} required/>
+            {errors.profile.length > 0 &&
+                <Errors errors={errors.profile} />
+            }
           </>
           : 
           <div className={style.usernameEmail}>
@@ -121,6 +135,9 @@ function Settings() {
           <input name="passwordConfirmation" id="passwordConfirmation" type="password" required/>
           <button className={style.submitBtn} type="submit" >UPDATE PASSWORD</button>
         </form>
+        {errors.password.length > 0 &&
+                <Errors errors={errors.password} />
+            }
         {success ? (
           <div className={style.success}>Password successfully updated</div>
         ) : <></>}

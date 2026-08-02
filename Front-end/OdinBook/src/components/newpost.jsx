@@ -5,12 +5,14 @@ import style from "../styles/newPost.module.css"
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../services/authContext';
 import {createPost} from "../services/newpostServices.js"
+import Errors from "./errorpage.jsx"
 
 function Newpost() {
   const editorRef = useRef(null);
   const quillRef = useRef(null);
   const navigate = useNavigate();
   const {auth} = useContext(AuthContext);
+  const [errors, setErrors] = useState([]);
 
   useEffect(() => {
     if(!editorRef.current || quillRef.current) return;
@@ -31,7 +33,7 @@ function Newpost() {
       await createPost(auth, html)
       navigate('/app/posts')
     } catch(err) {
-      console.log(err)
+      setErrors(err)
     }
   }
 
@@ -41,6 +43,9 @@ function Newpost() {
          <div ref={editorRef}></div>
       </div>
       <button className={style.btnNewNotice} onClick={handleSubmit}>ADD NOTICE</button>
+      {errors.length > 0 &&
+        <Errors errors={errors} />
+      }
     </div>
 )
 }

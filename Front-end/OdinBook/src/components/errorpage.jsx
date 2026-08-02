@@ -1,9 +1,14 @@
 import { useState } from 'react'
+import style from "../styles/errors.module.css"
 
-function Errorpage() {
+function Errors({errors}) {
   return(
-    <h1>errorpage</h1>
+    <ul className={style.error}><b>Inputs errors :</b>
+      {errors.map(err => {
+        return(<li key={errors.indexOf(err)} >{err.msg}</li>)
+      })}
+    </ul>
   )
 }
 
-export default Errorpage
+export default Errors

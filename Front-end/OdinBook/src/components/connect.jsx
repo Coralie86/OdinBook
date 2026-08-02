@@ -4,11 +4,14 @@ import wanted from "../assets/wanted.png"
 import { Link, useNavigate } from 'react-router-dom'
 import {register, login} from "../services/authServices.js"
 import { AuthContext } from '../services/authContext.jsx'
+import Errors from "./errorpage.jsx"
 
 function Connect() {
     const navigate = useNavigate();
     const [success, setSuccess] = useState(false);
-    const {auth, setAuth} = useContext(AuthContext)
+    const {auth, setAuth} = useContext(AuthContext);
+    const [errors, setErrors] = useState([]);
+    console.log(errors)
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -23,7 +26,7 @@ function Connect() {
             setAuth({...auth, accessToken: token})
             navigate("/app");
         } catch(err){
-            console.log(err)
+            setErrors(err);
         }
 
     }
@@ -38,7 +41,7 @@ function Connect() {
             const response = await register(formData);
             setSuccess(true);
         } catch(err) {
-            console.log(err)
+            setErrors(err);
         }
     }
 
@@ -48,33 +51,40 @@ function Connect() {
 
     return(
     <div className={style.wantedImage}>
-        <img src={wanted} />
-        <div className={style.login} >
-            <form className={style.formLogin} method="post" onSubmit={handleLogin}>
-                <label htmlFor="email">
-                    <input className={style.input} name="email" type="email" placeholder="Email" required />
-                </label>
-                <label htmlFor="password">
-                    <input className={style.input} name="password" type="password" placeholder="Password" required />
-                </label>
-                <button className={style.regBtn} type="submit">CONNECT</button>
-            </form>
-            <form className={style.formRegister} method="post" onSubmit={handleRegister}>
-                <label htmlFor="username">
-                    <input className={style.input} name="username" type="test" placeholder="Insert a username" required />
-                </label>
-                <label htmlFor="email">
-                    <input className={style.input} name="email" type="email" placeholder="Insert an Email" required />
-                </label>
-                <label htmlFor="password">
-                    <input className={style.input} name="password" type="password" placeholder="Choose a password" required />
-                </label>
-                <label htmlFor="confirmPassword">
-                    <input className={style.input} name="confirmPassword" type="password" placeholder="Confirm your password" required />
-                </label>
-                <button className={style.regBtn} type="submit">REGISTER</button>
-            </form>
-            <Link className={style.guestButton} onClick={handleAsGuest} >ENTER AS A GUEST</Link>
+        <div class={style.form}>
+            {/* <img src={wanted} /> */}
+            <div className={style.login} >
+                <form className={style.formLogin} method="post" onSubmit={handleLogin}>
+                    <label htmlFor="email">
+                        <input className={style.input} name="email" type="email" placeholder="Email" required />
+                    </label>
+                    <label htmlFor="password">
+                        <input className={style.input} name="password" type="password" placeholder="Password" required />
+                    </label>
+                    <button className={style.regBtn} type="submit">CONNECT</button>
+                </form>
+                <form className={style.formRegister} method="post" onSubmit={handleRegister}>
+                    <label htmlFor="username">
+                        <input className={style.input} name="username" type="test" placeholder="Insert a username" required />
+                    </label>
+                    <label htmlFor="email">
+                        <input className={style.input} name="email" type="email" placeholder="Insert an Email" required />
+                    </label>
+                    <label htmlFor="password">
+                        <input className={style.input} name="password" type="password" placeholder="Choose a password" required />
+                    </label>
+                    <label htmlFor="confirmPassword">
+                        <input className={style.input} name="confirmPassword" type="password" placeholder="Confirm your password" required />
+                    </label>
+                    <button className={style.regBtn} type="submit">REGISTER</button>
+                </form>
+                <Link className={style.guestButton} onClick={handleAsGuest} >ENTER AS A GUEST</Link>            
+            </div>
+        </div>
+        <div className={style.feedback} >
+            {errors.length > 0 &&
+                <Errors errors={errors} />
+            }
             {success ? (
                 <div className={style.success}>Registration successfull. You can now login.</div>
             ) : <></>}

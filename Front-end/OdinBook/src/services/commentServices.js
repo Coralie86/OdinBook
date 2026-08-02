@@ -29,7 +29,7 @@ export const editComment = async (auth, commentId, content) => {
     }
 
     if(!response.ok){
-        throw new Error("internal server error");
+        throw data.errors;
     }
 
     return data.comment
