@@ -14,7 +14,7 @@ exports.editComment = async (req,res,next) => {
 
     try {
         const newComment = await db.editComment(content, commentId);
-        return res.status(200).json({message: "Commetn successfully edited.", comment: newComment})
+        return res.status(200).json({message: "Comment successfully edited.", comment: newComment})
     } catch(err) {
         next(err)
     }

@@ -57,7 +57,46 @@ async function getAllPost(userId, options){
     const postList = await prisma.post.findMany({
         where: andFilters.length > 0 ? {AND : andFilters} : {},
         include: {
-            comments: true,
+            comments: {
+                select: {
+                    id: true,
+                    description: true,
+                    isEdited: true,
+                    timestamp: true,
+                    writer: {
+                        select: {
+                            username: true,
+                        }
+                    }
+                    
+                }
+            },
+            author: {
+                select: {
+                    username: true,
+                    follows: {
+                        where: {
+                            userFollowedId: userId,
+                        },
+                        select: {
+                            isAccepted: true,
+                        }
+                    },
+                    followers: {
+                        where: {
+                            userId: userId,
+                        },
+                        select: {
+                            isAccepted: true,
+                        }
+                    },
+                }
+            },
+            likes: {
+                where: {
+                    userId: userId,
+                },
+            }
         }
     });
     return postList
@@ -152,6 +191,12 @@ async function deletePost(postId){
         }
     })
 
+    await prisma.like.deleteMany({
+        where: {
+            postId: postId, 
+        }
+    })
+
     await prisma.post.delete({
         where: {
             id: postId, 
@@ -165,6 +210,17 @@ async function createComment(postId, authorId, content){
             description: content,
             postId: postId,
             writerId: authorId,
+        },
+        select: {
+            id: true,
+            description:true,
+            isEdited: true,
+            timestamp: true,
+            writer: {
+                select: {
+                    username: true,
+                }
+            }
         }
     })
 
