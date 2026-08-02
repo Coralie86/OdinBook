@@ -41,14 +41,10 @@
 
 .textPost p {
     font-family: "WesternBody";
-    font-size: 30px;
+    font-size: 26px;
     text-align: justify;
     padding: 10px 40px;
 }
-
-/* .timetampPost {
-    justify-self: right;
-} */
 
 .authorPost {
     display: flex;
@@ -75,9 +71,46 @@ p {
 .timetampPost {
     display: flex;
     justify-content: space-between;
+    margin: 0px 30px;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.date {
+ font-family: "WesternBody";
+ font-size: 20px;
 }
 
 .pngAsSvg {
     width: 30px;
     height:auto;
+}
+
+
+.iconContainer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.icon {
+    height: 26px;
+    width: 26px;
+}
+
+.addCommentContainer{
+    display: flex;
+    align-items: center;
+    background-color: #f4e8c5;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+textarea{
+    width: 100%;
+}
+
+.contentPost {
+    padding: 20px 0px;
 }
