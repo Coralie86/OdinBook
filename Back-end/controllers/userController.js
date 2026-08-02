@@ -1,4 +1,5 @@
 const db = require("../services/queries.js")
+const {validationResult} = require("express-validator")
 
 exports.getUsers = async (req,res,next) => {
     const userId = parseInt(req.user.id);
@@ -76,6 +77,12 @@ exports.getMyProfil = async (req,res,next) => {
 }
 
 exports.updateMyProfil = async (req,res,next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()})
+    }
+
     const newUser = req.body;
     const userId = parseInt(req.user.id);
 
@@ -88,11 +95,17 @@ exports.updateMyProfil = async (req,res,next) => {
 }
 
 exports.updatePassword = async (req,res,next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()})
+    }
+
     const userId = parseInt(req.user.id);
     const newPassword = req.body.password;
 
     if(!newPassword) {
-        return res.status(400).json({message: "Insert a password"})
+        return res.status(400).json({errors: [{msg: "Insert a password"}]})
     }
 
     try {

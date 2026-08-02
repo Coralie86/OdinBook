@@ -1,10 +1,18 @@
 const db = require("../services/queries.js")
+const {validationResult} = require("express-validator")
 
 exports.createPost = async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()})
+    }
+    
     const postContent = req.body.content;
+    console.log(postContent)
 
     if(!postContent){
-        return res.status(400).json({message: "Insert a content."});
+        return res.status(400).json({errors: [{msg: "Insert a content."}]});
     }
 
     try {
@@ -77,16 +85,22 @@ exports.deletePost = async (req,res,next) => {
 }
 
 exports.commentPost = async (req,res,next) => {
+    const errors = validationResult(req); 
+
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()})
+    }
+
     const postId = parseInt(req.params.postId);
     const userId = parseInt(req.user.id);
     const content = req.body.description;
 
     if(!postId){
-        return res.status(404).json({message: "Resource not found."})
+        return res.status(404).json({errors: [{msg: "Resource not found."}]})
     }
 
     if(!content){
-        return res.status(400).json({message: "Insert a comment."})
+        return res.status(400).json({errors: [{msg: "Insert a comment."}]})
     }
 
     try {

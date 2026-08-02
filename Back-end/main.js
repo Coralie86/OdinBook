@@ -36,14 +36,14 @@ app.use('/posts', postRouter)
 app.use('/comments', commentRouter)
 app.use('/users', userRouter)
 
-// app.use((err, req, res, next) => {
-//     if(err.name === "JsonWebTokenError" || err.name === "TokenExpiredError"){
-//         return res.status(401).json({message: "Token invalid, malformed or expired."})
-//     }
+app.use((err, req, res, next) => {
+    if(err.name === "JsonWebTokenError" || err.name === "TokenExpiredError"){
+        return res.status(401).json({message: "Token invalid, malformed or expired."})
+    }
 
-//     if(err.status){
-//         return res.status(err.status).json({ message: err.message })
-//     }
+    if(err.status){
+        return res.status(err.status).json({ message: err.message })
+    }
     
-//     res.status(500).json({message: "Internal server error."})
-// })
+    res.status(500).json({message: "Internal server error."})
+})

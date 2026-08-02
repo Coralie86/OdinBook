@@ -1,15 +1,22 @@
 const db = require("../services/queries.js")
+const {validationResult} = require("express-validator")
 
 exports.editComment = async (req,res,next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()})
+    }
+
     const commentId = parseInt(req.params.commentId);
     const content = req.body.description;
 
     if(!content){
-        return res.status(400).json({message: "Insert a comment."})
+        return res.status(400).json({errors: [{msg: "Insert a comment."}]})
     }
 
     if(!commentId){
-        return res.status(404).json({message: "Resource not found."})
+        return res.status(404).json({errors: [{msg: "Resource not found."}]})
     }
 
     try {

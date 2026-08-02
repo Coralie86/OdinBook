@@ -2,13 +2,19 @@ const jwt = require("jsonwebtoken")
 const db = require("../services/queries.js")
 const auth = require("../services/authServices.js")
 const bcrypt = require("bcryptjs")
+const {validationResult} = require("express-validator")
 
 exports.register = async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()})
+    }
 
     const newUser = req.body;
 
     if(!newUser.username || !newUser.email || !newUser.password){
-        return res.status(400).json({message: "Insert a username, an email and a password."})
+        return res.status(400).json({errors: [{msg: "Insert a username, an email and a password."}]})
     }
 
     try {
@@ -20,22 +26,27 @@ exports.register = async (req, res, next) => {
 }
 
 exports.login = async (req, res, next) => {
+    const errors = validationResult(req);
+
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors: errors.array()})
+    }
 
     const userLogged = req.body;
 
     if(!userLogged.email || !userLogged.password ){
-        return res.status(400).json({message: "Insert an email and a password."})
+        return res.status(400).json({errors: [{msg: "Insert an email and a password."}]})
     }
     
     try {
         const user = await auth.checkUserExists(userLogged);
         if(!user){
-            return res.status(401).json({message: "No existing account for this email."})
+            return res.status(401).json({errors: [{msg: "No existing account for this email."}]})
         }
 
         const match = await bcrypt.compare(userLogged.password, user.password);
         if(!match){
-            return res.status(401).json({message:"Wrong password."})
+            return res.status(401).json({errors: [{msg: "Wrong password."}]})
         }
 
         const { access_token, refresh_token } = await auth.loginUser(user);
