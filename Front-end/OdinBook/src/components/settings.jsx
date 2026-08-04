@@ -22,7 +22,8 @@ function Settings() {
   const [profile, setProfile] = useState({
     id: null,
     username: null,
-    email: null
+    email: null,
+    image: null,
   });
   const navigate = useNavigate();
 
