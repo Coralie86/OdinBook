@@ -76,10 +76,16 @@ JWT_SECRET_ACCESS=
 JWT_EXPIRESIN_ACCESS=1h
 JWT_SECRET_REFRESH=
 JWT_EXPIRESIN_REFRESH=1d
+EMAIL_GUEST=
+PASSWORD_GUEST="
 ```
+*****Make sure that guest account is present in the database
 
 Frontend:
 
 ```env
 VITE_API_URL=http://localhost:3000
 ```
+## Improvements
+
+- Let the use to select another profile image
