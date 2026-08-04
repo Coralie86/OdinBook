@@ -6,6 +6,7 @@ const authRouter = Router();
 
 authRouter.post('/register', authValidator.registerValidator, authController.register)
 authRouter.post('/login', authValidator.loginValidator, authController.login)
+authRouter.post('/login-guest', authController.loginGuest)
 authRouter.post('/logout', authController.logout)
 authRouter.post('/refresh-token', authController.refreshToken)
 

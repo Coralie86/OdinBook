@@ -28,6 +28,7 @@ const loginUser = async (payload) => {
             id: true,
             image:true,
             username: true,
+            isGuest: true,
         }
     })
     const access_token = generateToken(user, process.env.JWT_SECRET_ACCESS, process.env.JWT_EXPIRESIN_ACCESS);

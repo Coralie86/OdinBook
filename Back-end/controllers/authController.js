@@ -61,6 +61,35 @@ exports.login = async (req, res, next) => {
     }
 }
 
+exports.loginGuest = async (req, res, next) => {
+    const guestLogged = {
+        email: process.env.EMAIL_GUEST,
+        password: process.env.PASSWORD_GUEST,
+    }
+
+    try {
+        const user = await auth.checkUserExists(guestLogged);
+        if(!user){
+            return res.status(401).json({errors: [{msg: "No existing account for this email."}]})
+        }
+
+        const match = await bcrypt.compare(guestLogged.password, user.password);
+        if(!match){
+            return res.status(401).json({errors: [{msg: "Wrong password."}]})
+        }
+
+        const { access_token, refresh_token } = await auth.loginUser(user);
+        res.cookie('refreshToken', refresh_token, {
+            httpOnly: true,
+            maxAge: 24*60*60*1000,
+        })
+
+        res.status(200).json({message: 'Authentication sucessfull.', accessToken: access_token})
+    } catch(err) {
+        next(err)
+    }
+}
+
 exports.logout = async (req, res, next) => {    
     try {        
         res.clearCookie("refreshToken")

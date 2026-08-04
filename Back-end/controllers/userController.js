@@ -69,6 +69,7 @@ exports.getMyProfil = async (req,res,next) => {
             email: req.user.email,
             image: req.user.image,
             username: req.user.username,
+            isGuest: req.user.isGuest,
         };
         res.status(200).json(user)
     } catch(err) {
