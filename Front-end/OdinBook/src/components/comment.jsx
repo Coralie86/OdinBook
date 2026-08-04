@@ -7,15 +7,23 @@ import { TiTickOutline } from "react-icons/ti";
 import { TiCancel } from "react-icons/ti";
 import { editComment } from '../services/commentServices';
 import Errors from "./errorpage.jsx"
+import Modal from './modal.jsx';
 
 function Comment({comment, deleteComment}) {
   const [commentInfo, setCommentInfo] = useState(comment)
   const {auth, setAuth} = useContext(AuthContext);
   const [isEditable, setIsEditable] = useState(false);
   const [errors, setErrors] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const textModalGuest = "You cannot perform this action as you are connected as a Guest. Register and you will be granted all actions."
 
   const handleEditInput = async () => {
-    setIsEditable(true)
+    if(auth.isGuest){
+      setIsOpen(true)
+    } else {
+      setIsEditable(true)
+    }
   }
 
   const handleEditComment = async () => {
@@ -43,15 +51,26 @@ function Comment({comment, deleteComment}) {
 
 
   const handleDeleteComment = async () => {
-    
-    try {
-      await deleteComment(comment.id)
-    } catch(err) {
-      console.log(err)
+    if(auth.isGuest){
+      setIsOpen(true);
+    } else {
+      try {
+        await deleteComment(comment.id)
+      } catch(err) {
+        console.log(err)
+      }
     }
   }
 
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  }
+
   return(
+    <>
+    {isOpen && (
+      <Modal handleCloseModal={handleCloseModal} text={textModalGuest} />
+    )}
     <div className={style.commentContainer} >
       <div className={style.iconContainer}>
         <p className={style.editedParagraph}>{commentInfo.isEdited ? "Edited" : ""}</p>
@@ -76,6 +95,7 @@ function Comment({comment, deleteComment}) {
         <p className={style.dateContent} >{(new Date(commentInfo.timestamp)).toLocaleString()}</p>
       </h1>        
     </div>
+    </>
   )
 }
 

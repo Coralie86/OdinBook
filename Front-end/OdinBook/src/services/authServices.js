@@ -37,6 +37,24 @@ export const login = async (form) => {
     return data;
 }
 
+export const loginGuest = async () => {
+    const response = await fetch(`${API_URL}/auth/login-guest`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+            "Content-Type":"application/json"
+        },
+    });
+
+    const data = await response.json();
+
+    if(!response.ok){
+        throw data.errors;
+    }
+
+    return data;
+}
+
 export const logout = async () => {
     const response = await fetch(`${API_URL}/auth/logout`, {
         method: "POST",

@@ -2,7 +2,7 @@ import { useContext, useState } from 'react'
 import style from "../styles/connect.module.css"
 import wanted from "../assets/wanted.png"
 import { Link, useNavigate } from 'react-router-dom'
-import {register, login} from "../services/authServices.js"
+import {register, login, loginGuest} from "../services/authServices.js"
 import { AuthContext } from '../services/authContext.jsx'
 import Errors from "./errorpage.jsx"
 
@@ -39,13 +39,22 @@ function Connect() {
         try {
             const response = await register(formData);
             setSuccess(true);
+            setErrors([])
         } catch(err) {
             setErrors(err);
         }
     }
 
-    const handleAsGuest = () => {
-
+    const handleAsGuest = async () => {
+        try {
+            const res = await loginGuest();
+            const token = res.accessToken;
+            localStorage.setItem('accessToken', token);
+            setAuth({...auth, accessToken: token})
+            navigate("/app");
+        } catch(err){
+            setErrors(err);
+        }
     }
 
     return(

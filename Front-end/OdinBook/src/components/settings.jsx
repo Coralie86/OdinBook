@@ -8,11 +8,13 @@ import { getUserInfo, updateUserInfo, updatePassword} from "../services/settings
 import {logout} from "../services/authServices.js"
 import { useNavigate } from 'react-router-dom';
 import Errors from "./errorpage.jsx"
+import Modal from './modal.jsx';
 
 function Settings() {
   const [isEditable, setIsEditable] = useState(false);
   const {auth, setAuth} = useContext(AuthContext);
   const [success, setSuccess] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [errors, setErrors] = useState({
     profile: [],
     password: []
@@ -23,6 +25,8 @@ function Settings() {
     email: null
   });
   const navigate = useNavigate();
+
+  const textModalGuest = "You cannot perform this action as you are connected as a Guest. Register and you will be granted all actions."
 
   useEffect(() => {
     const controller = new AbortController();
@@ -75,26 +79,43 @@ function Settings() {
     const form = e.target;
     const formData = new FormData(form);
 
-    try {
-      await updatePassword(auth, setAuth, formData);
-      setSuccess(true);
-    } catch(err) {
-      setErrors({
-        ...errors,
-        password: err
-      })
+    if(auth.isGuest){
+      setIsOpen(true);
+    } else {
+      try {
+        await updatePassword(auth, setAuth, formData);
+        setSuccess(true);
+      } catch(err) {
+        setErrors({
+          ...errors,
+          password: err
+        })
+      }
     }
+    
   }
 
   const handleFiledEditable = () => {
-    setIsEditable(true);
+    if(auth.isGuest){
+      setIsOpen(true);
+    } else {
+      setIsEditable(true);
+    }
   }
 
   const handleCancel = () => {
     setIsEditable(false);
   }
 
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  }
+
   return(
+    <>
+    {isOpen && (
+      <Modal handleCloseModal={handleCloseModal} text={textModalGuest} />
+    )}
     <div className={style.settingsContainer} >
       <h1 className={style.headersProfile}>SHERIFF'S PROFILE</h1>
       <div className={style.profile}>
@@ -143,6 +164,7 @@ function Settings() {
         ) : <></>}
       </div>
     </div>
+    </>
   )
 }
 

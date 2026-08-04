@@ -1,28 +1,38 @@
 import { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getUserInfo } from "./settingsServices";
 
 export const AuthContext = createContext();
 
 export function AuthProvider({children}){
-    const [auth, setAuth] = useState({accessToken: localStorage.getItem('accessToken')})
+    const [auth, setAuth] = useState({
+        accessToken: localStorage.getItem('accessToken'),
+        isGuest: false,
+    })
 
-    // useEffect(() => {
-    //     const controller = new AbortController();
+    useEffect(() => {
+        const controller = new AbortController();
 
-    //     async function fetchToken() {
-    //         try {
-    //             if(!auth.accessToken){
-    //                 Navigate("/")
-    //             }
-    //         } catch(err){
-    //             console.log(err)
-    //         }
-    //     }
+        async function fetchUser() {
+            try {
+                if(auth.accessToken){
+                    const response = await getUserInfo(auth, setAuth);
+                    setAuth({
+                        ...auth,
+                        isGuest: response.isGuest,
+                    })
+                }
+            } catch(err){
+                console.log(err)
+            }
+        }
 
-    //     return () => {
-    //         constroller.abort();
-    //     }
-    // }, [auth.accessToken])
+        fetchUser();
+
+        return () => {
+            controller.abort();
+        }
+    }, [auth.accessToken])
 
     return(
         <AuthContext.Provider value={{auth, setAuth}} >
