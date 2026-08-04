@@ -10,7 +10,7 @@ import Errors from "./errorpage.jsx"
 
 function Comment({comment, deleteComment}) {
   const [commentInfo, setCommentInfo] = useState(comment)
-  const {auth} = useContext(AuthContext);
+  const {auth, setAuth} = useContext(AuthContext);
   const [isEditable, setIsEditable] = useState(false);
   const [errors, setErrors] = useState([]);
 
@@ -22,7 +22,7 @@ function Comment({comment, deleteComment}) {
     const newContent = document.getElementById("commentDescription").value;
 
     try {
-      const newComment = await editComment(auth, comment.id, newContent);
+      const newComment = await editComment(auth, setAuth, comment.id, newContent);
       setCommentInfo({
         ...commentInfo,
         description: newComment.description,

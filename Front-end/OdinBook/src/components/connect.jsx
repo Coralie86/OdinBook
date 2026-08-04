@@ -11,7 +11,6 @@ function Connect() {
     const [success, setSuccess] = useState(false);
     const {auth, setAuth} = useContext(AuthContext);
     const [errors, setErrors] = useState([]);
-    console.log(errors)
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -51,7 +50,7 @@ function Connect() {
 
     return(
     <div className={style.wantedImage}>
-        <div class={style.form}>
+        <div className={style.form}>
             {/* <img src={wanted} /> */}
             <div className={style.login} >
                 <form className={style.formLogin} method="post" onSubmit={handleLogin}>
@@ -78,7 +77,7 @@ function Connect() {
                     </label>
                     <button className={style.regBtn} type="submit">REGISTER</button>
                 </form>
-                <Link className={style.guestButton} onClick={handleAsGuest} >ENTER AS A GUEST</Link>            
+                <Link className={style.guestButton} onClick={handleAsGuest} >GUEST ACCESS</Link>            
             </div>
         </div>
         <div className={style.feedback} >

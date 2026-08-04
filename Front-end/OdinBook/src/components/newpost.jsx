@@ -11,7 +11,7 @@ function Newpost() {
   const editorRef = useRef(null);
   const quillRef = useRef(null);
   const navigate = useNavigate();
-  const {auth} = useContext(AuthContext);
+  const {auth, setAuth} = useContext(AuthContext);
   const [errors, setErrors] = useState([]);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ function Newpost() {
     const html = quillRef.current.root.innerHTML;
     
     try{
-      await createPost(auth, html)
+      await createPost(auth, setAuth, html)
       navigate('/app/posts')
     } catch(err) {
       setErrors(err)

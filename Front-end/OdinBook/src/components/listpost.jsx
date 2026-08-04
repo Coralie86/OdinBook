@@ -8,7 +8,7 @@ import { fetchListPost } from '../services/postServices.js'
 import { IoMdSearch } from "react-icons/io";
 
 function Listpost() {
-  const {auth} = useContext(AuthContext);
+  const {auth, setAuth} = useContext(AuthContext);
   const [listPost, setListPost] = useState([]);
   const [filter, setFilter] = useState({
     search: null,
@@ -20,8 +20,7 @@ function Listpost() {
 
     async function getListPost() {
       try {
-        const response = await fetchListPost(auth, filter);
-        console.log(response.postList)
+        const response = await fetchListPost(auth, setAuth, filter);
         setListPost(response.postList);
       } catch(err) {
         console.log(err)

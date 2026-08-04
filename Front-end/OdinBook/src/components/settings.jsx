@@ -29,7 +29,7 @@ function Settings() {
 
     async function getuserProfile() {
       try {
-        const response = await getUserInfo(auth);
+        const response = await getUserInfo(auth, setAuth);
         
         setProfile({
           ...profile,
@@ -53,7 +53,7 @@ function Settings() {
     const email = document.getElementById("email").value;
     
     try {
-      await updateUserInfo(auth, {username: username, email: email});
+      await updateUserInfo(auth, setAuth, {username: username, email: email});
       setIsEditable(false);
 
       // Force re-login
@@ -76,7 +76,7 @@ function Settings() {
     const formData = new FormData(form);
 
     try {
-      await updatePassword(auth, formData);
+      await updatePassword(auth, setAuth, formData);
       setSuccess(true);
     } catch(err) {
       setErrors({

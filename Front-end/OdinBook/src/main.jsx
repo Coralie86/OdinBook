@@ -8,6 +8,7 @@ import Listpost from "./components/listpost.jsx"
 import Navbar from "./components/navbar.jsx"
 import Connect from "./components/connect.jsx"
 import {AuthProvider} from './services/authContext.jsx'
+import ProtectedRoute from './components/protectedRoute.jsx'
 
 
 const router = createBrowserRouter([
@@ -16,13 +17,18 @@ const router = createBrowserRouter([
     element:<Connect />,
   },
   {
-    path: "/app",
-    element: <Navbar />,
+    element: <ProtectedRoute />,
     children: [
-      {index: true, element: <Listpost />},
-      {path:":page", element: <Children />}
-    ]
-  }
+      {
+        path: "/app",
+        element: <Navbar />,
+        children: [
+          {index: true, element: <Listpost />},
+          {path:":page", element: <Children />},
+        ],
+      },
+    ],
+  },  
 ])
 
 createRoot(document.getElementById('root')).render(

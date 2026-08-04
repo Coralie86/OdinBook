@@ -22,7 +22,7 @@ function UserList() {
 
     async function fetchUsers () {
         try {
-            const response = await fetchUsersList(auth, filter);
+            const response = await fetchUsersList(auth, setAuth, filter);
             setUsers(response)
         } catch(err) {
             console.log(err);

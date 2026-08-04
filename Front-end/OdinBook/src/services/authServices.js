@@ -67,7 +67,50 @@ export const refreshToken = async () => {
     const data = await response.json();
 
     if(!response.ok){
-        return data.errors
+        return new Error("Unable to refresh token.")
     }
     return data
+}
+
+export const authFetch = async (url, options = {}, auth, setAuth) =>{
+    const headers = {
+        ...options.headers,
+        Authorization: `Bearer ${auth.accessToken}`,
+    }
+
+    let response = await fetch(url, {
+        ...options,
+        headers: headers,
+        credentials: "include",
+    })
+
+    if(response.status !== 401){
+        return response;
+    }
+
+    try {
+        const refresh = await refreshToken();
+
+        localStorage.setItem("token", refresh.accessToken);
+
+        setAuth(prev => ({
+            ...prev, accessToken: refresh.accessToken
+        }))
+
+        response = await fetch(url, {
+            ...options,
+            headers: {
+                ...options.headers,
+                Authorization: `Bearer ${refresh.accessToken}`
+            },
+            credentials: "include",
+        });
+    } catch(err) {
+        localStorage.removeItem("accessToken");
+        setAuth ({accessToken: null})
+        logout();
+        throw err;
+    }
+    
+    return response;
 }

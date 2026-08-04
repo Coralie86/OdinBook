@@ -1,8 +1,8 @@
-import { refreshToken } from "./authServices";
+import { authFetch } from "./authServices";
 
 const API_URL = import.meta.env.VITE_API_URL
 
-export const fetchListPost = async (auth, filter) => {
+export const fetchListPost = async (auth, setAuth, filter) => {
     let query = "";
     if(filter.search){
         query = query.concat("&search="+filter.search)
@@ -14,115 +14,71 @@ export const fetchListPost = async (auth, filter) => {
         query = query.concat("&following=true")
     }
 
-    const response = await fetch(`${API_URL}/posts?${query}`, {
+    const response = await authFetch(`${API_URL}/posts?${query}`, {
         method: "GET",
-        credentials: "include",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${auth.accessToken}`
         }
-    })
-    
-    const data = await response.json();
-    
-    if(response.status == 401){
-        try {
-            const response = await refreshToken();
-            localStorage.setItem('accessToken', response.accessToken);
-        } catch(err) {
-            throw new Error("internal server error");
-        }
-    }
+    }, auth, setAuth)
 
     if(!response.ok){
         throw new Error("internal server error");
     }
 
+    const data = await response.json();
+
     return data
 }
 
-export const likePost = async (auth, postId) => {
+export const likePost = async (auth, setAuth, postId) => {
 
-    const response = await fetch(`${API_URL}/posts/${postId}/likes`, {
+    const response = await authFetch(`${API_URL}/posts/${postId}/likes`, {
         method: "POST",
-        credentials: "include",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${auth.accessToken}`
         }
-    })
-    
-    const data = await response.json();
-    
-    if(response.status == 401){
-        try {
-            const response = await refreshToken();
-            localStorage.setItem('accessToken', response.accessToken);
-        } catch(err) {
-            throw new Error("internal server error");
-        }
-    }
+    }, auth, setAuth)
 
     if(!response.ok){
         throw new Error("internal server error");
     }
+    
+    const data = await response.json();
 
     return data
 }
 
-export const unlikePost = async (auth, postId) => {
+export const unlikePost = async (auth, setAuth, postId) => {
 
-    const response = await fetch(`${API_URL}/posts/${postId}/likes`, {
+    const response = await authFetch(`${API_URL}/posts/${postId}/likes`, {
         method: "DELETE",
-        credentials: "include",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${auth.accessToken}`
         }
-    })
-    
-    const data = await response.json();
-    
-    if(response.status == 401){
-        try {
-            const response = await refreshToken();
-            localStorage.setItem('accessToken', response.accessToken);
-        } catch(err) {
-            throw new Error("internal server error");
-        }
-    }
+    }, auth, setAuth)
 
     if(!response.ok){
         throw new Error("internal server error");
     }
+    
+    const data = await response.json();
 
     return data
 }
 
-export const addComment = async (auth, postId, content) => {
+export const addComment = async (auth, setAuth, postId, content) => {
 
-    const response = await fetch(`${API_URL}/posts/${postId}/comments`, {
+    const response = await authFetch(`${API_URL}/posts/${postId}/comments`, {
         method: "POST",
-        credentials: "include",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${auth.accessToken}`
         },
         body: JSON.stringify({
             description: content
         })
-    })
+    }, auth, setAuth)
     
     const data = await response.json();
-    
-    if(response.status == 401){
-        try {
-            const response = await refreshToken();
-            localStorage.setItem('accessToken', response.accessToken);
-        } catch(err) {
-            throw new Error("internal server error");
-        }
-    }
 
     if(!response.ok){
         throw data.errors;

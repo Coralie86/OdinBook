@@ -1,8 +1,8 @@
-import { refreshToken } from "./authServices";
+import { authFetch } from "./authServices";
 
 const API_URL = import.meta.env.VITE_API_URL
 
-export const fetchUsersList = async (auth, filter) => {
+export const fetchUsersList = async (auth, setAuth, filter) => {
     let query = "";
     if(filter.btn === "pendingBtn"){
         query = query.concat("&pending=true");
@@ -18,117 +18,73 @@ export const fetchUsersList = async (auth, filter) => {
         query = query.concat("&search="+filter.search);
     }
 
-    const response = await fetch(`${API_URL}/users?${query}`, {
+    const response = await authFetch(`${API_URL}/users?${query}`, {
         method: "GET",
-        credentials: "include",
         headers: {
             "Content-Type": "application/json",
-            "Authorization" : `Bearer ${auth.accessToken}`
         }
-    })
-
-    const data = await response.json();
-    
-    if(response.status == 401){
-        try {
-            const response = await refreshToken();
-            localStorage.setItem('accessToken', response.accessToken);
-        } catch(err) {
-            throw new Error("internal server error");
-        }
-    }
+    }, auth, setAuth)
 
     if(!response.ok){
         throw new Error("internal server error");
     }
 
+    const data = await response.json();
+
     return data
 }
 
 
-export const acceptFollow = async (auth, userFollowedId) => {
+export const acceptFollow = async (auth, setAuth, userFollowedId) => {
    
-    const response = await fetch(`${API_URL}/users/${userFollowedId}/follows`, {
+    const response = await authFetch(`${API_URL}/users/${userFollowedId}/follows`, {
         method: "PUT",
-        credentials: "include",
         headers: {
             "Content-Type": "application/json",
-            "Authorization" : `Bearer ${auth.accessToken}`
         }
-    })
-
-    const data = await response.json();
-    
-    if(response.status == 401){
-        try {
-            const response = await refreshToken();
-            localStorage.setItem('accessToken', response.accessToken);
-        } catch(err) {
-            throw new Error("internal server error");
-        }
-    }
+    }, auth, setAuth)
 
     if(!response.ok){
         throw new Error("internal server error");
     }
 
+    const data = await response.json();
+
     return data
 }
 
-export const unFollow = async (auth, userId) => {
+export const unFollow = async (auth, setAuth, userId) => {
    
-    const response = await fetch(`${API_URL}/users/${userId}/follows`, {
+    const response = await authFetch(`${API_URL}/users/${userId}/follows`, {
         method: "DELETE",
-        credentials: "include",
         headers: {
             "Content-Type": "application/json",
-            "Authorization" : `Bearer ${auth.accessToken}`
         }
-    })
-
-    const data = await response.json();
-    
-    if(response.status == 401){
-        try {
-            const response = await refreshToken();
-            localStorage.setItem('accessToken', response.accessToken);
-        } catch(err) {
-            throw new Error("internal server error");
-        }
-    }
+    }, auth, setAuth)
 
     if(!response.ok){
         throw new Error("internal server error");
     }
+
+    const data = await response.json();
 
     return data
 }
 
-export const requestFollow = async (auth, userFollowedId) => {
+export const requestFollow = async (auth, setAuth, userFollowedId) => {
    
-    const response = await fetch(`${API_URL}/users/${userFollowedId}/follows`, {
+    const response = await authFetch(`${API_URL}/users/${userFollowedId}/follows`, {
         method: "POST",
-        credentials: "include",
         headers: {
             "Content-Type": "application/json",
-            "Authorization" : `Bearer ${auth.accessToken}`
         }
-    })
-
-    const data = await response.json();
-    
-    if(response.status == 401){
-        try {
-            const response = await refreshToken();
-            localStorage.setItem('accessToken', response.accessToken);
-        } catch(err) {
-            throw new Error("internal server error");
-        }
-    }
+    }, auth, setAuth)
 
     if(!response.ok){
         throw new Error("internal server error");
     }
+
+    const data = await response.json();
 
     return data
 }

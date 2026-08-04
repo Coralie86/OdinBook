@@ -18,7 +18,7 @@ import DOMPurify from "dompurify";
 import Errors from "./errorpage.jsx"
 
 function Post({post}) {
-    const {auth} = useContext(AuthContext);
+    const {auth,setAuth} = useContext(AuthContext);
     const [comments, setComments] = useState(post.comments);
     const [showComment, setShowComment] = useState(false);
     const [showAddComment, setShowAddComment] = useState(false);
@@ -63,10 +63,10 @@ function Post({post}) {
     const handleLiked = async () => {
         try {
             if(likedStatus == ""){
-                await likePost(auth, post.id);
+                await likePost(auth, setAuth, post.id);
                 setLikedStatus("liked");
             } else {
-                await unlikePost(auth, post.id);
+                await unlikePost(auth, setAuth, post.id);
                 setLikedStatus("");
             }
             
@@ -80,8 +80,8 @@ function Post({post}) {
         const content = document.getElementById("newComment").value;
         
         try {
-            const newComment = await addComment(auth, post.id, content);
-            console.log(newComment)
+            const newComment = await addComment(auth, setAuth, post.id, content);
+            
             setComments([
                 ...comments, newComment.comment
             ])
@@ -100,7 +100,7 @@ function Post({post}) {
 
     const handleDeleteComment = async (commentId) => {
         try {
-            await deleteComment(auth, commentId);
+            await deleteComment(auth, setAuth, commentId);
             setComments(comments.filter(com => com.id !== commentId));
         } catch(err) {
             console.log(err)

@@ -29,7 +29,7 @@ function User({user}) {
     
     const handleAccept = async() => {
         
-        await acceptFollow(auth, user.id);
+        await acceptFollow(auth, setAuth, user.id);
         setUserInfo({
             ...userInfo,
             follows: userInfo.follows.map(follow => ({
@@ -42,7 +42,7 @@ function User({user}) {
 
     const handleUnfollow = async() => {
 
-        await unFollow(auth, user.id);
+        await unFollow(auth, setAuth, user.id);
         setUserInfo({
             ...userInfo,
             follows: [],
@@ -53,7 +53,7 @@ function User({user}) {
 
     const handleRequest = async() => {
         
-        await requestFollow(auth, user.id);
+        await requestFollow(auth, setAuth, user.id);
         setUserInfo({
             ...userInfo,
             followers: [...userInfo.followers, {isAccepted: false}]

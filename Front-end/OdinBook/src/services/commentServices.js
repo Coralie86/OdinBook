@@ -1,32 +1,21 @@
-import { refreshToken } from "./authServices";
+import { authFetch } from "./authServices";
 
 const API_URL = import.meta.env.VITE_API_URL
 
 
-export const editComment = async (auth, commentId, content) => {
+export const editComment = async (auth, setAuth, commentId, content) => {
 
-    const response = await fetch(`${API_URL}/comments/${commentId}`, {
+    const response = await authFetch(`${API_URL}/comments/${commentId}`, {
         method: "PUT",
-        credentials: "include",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${auth.accessToken}`
         },
         body: JSON.stringify({
             description: content
         })
-    })
+    }, auth, setAuth)
     
     const data = await response.json();
-    
-    if(response.status == 401){
-        try {
-            const response = await refreshToken();
-            localStorage.setItem('accessToken', response.accessToken);
-        } catch(err) {
-            throw new Error("internal server error");
-        }
-    }
 
     if(!response.ok){
         throw data.errors;
@@ -35,30 +24,19 @@ export const editComment = async (auth, commentId, content) => {
     return data.comment
 }
 
-export const deleteComment = async (auth, commentId) => {
-    const response = await fetch(`${API_URL}/comments/${commentId}`, {
+export const deleteComment = async (auth, setAuth, commentId) => {
+    const response = await authFetch(`${API_URL}/comments/${commentId}`, {
         method: "DELETE",
-        credentials: "include",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${auth.accessToken}`
         }
-    })
+    }, auth, setAuth)
     
-    const data = await response.json();
-    
-    if(response.status == 401){
-        try {
-            const response = await refreshToken();
-            localStorage.setItem('accessToken', response.accessToken);
-        } catch(err) {
-            throw new Error("internal server error");
-        }
-    }
-
     if(!response.ok){
         throw new Error("internal server error");
     }
+
+    const data = await response.json();
 
     return data
 }
