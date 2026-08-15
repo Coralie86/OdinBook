@@ -88,4 +88,4 @@ VITE_API_URL=http://localhost:3000
 ```
 ## Improvements
 
-- Let the use to select another profile image
+- Let the user to select another profile image
