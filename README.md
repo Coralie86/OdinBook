@@ -77,7 +77,9 @@ JWT_EXPIRESIN_ACCESS=1h
 JWT_SECRET_REFRESH=
 JWT_EXPIRESIN_REFRESH=1d
 EMAIL_GUEST=
-PASSWORD_GUEST="
+PASSWORD_GUEST=
+PORT=
+FRONTEND_URL=
 ```
 *****Make sure that guest account is present in the database
 
