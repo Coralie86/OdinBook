@@ -85,7 +85,7 @@ export const refreshToken = async () => {
     const data = await response.json();
 
     if(!response.ok){
-        return new Error("Unable to refresh token.")
+        throw new Error("Unable to refresh token.")
     }
     return data
 }
@@ -109,7 +109,7 @@ export const authFetch = async (url, options = {}, auth, setAuth) =>{
     try {
         const refresh = await refreshToken();
 
-        localStorage.setItem("token", refresh.accessToken);
+        localStorage.setItem("accessToken", refresh.accessToken);
 
         setAuth(prev => ({
             ...prev, accessToken: refresh.accessToken
