@@ -1,5 +1,6 @@
 const db = require("../services/queries.js")
 const {validationResult} = require("express-validator")
+const sanitizeHTML = require("../utils/sanitizeHTML.js");
 
 exports.editComment = async (req,res,next) => {
     const errors = validationResult(req);
@@ -9,7 +10,7 @@ exports.editComment = async (req,res,next) => {
     }
 
     const commentId = parseInt(req.params.commentId);
-    const content = req.body.description;
+    const content = sanitizeHTML(req.body.description);
 
     if(!content){
         return res.status(400).json({errors: [{msg: "Insert a comment."}]})

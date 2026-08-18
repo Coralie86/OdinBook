@@ -1,5 +1,6 @@
 const db = require("../services/queries.js")
 const {validationResult} = require("express-validator")
+const sanitizeHTML = require("../utils/sanitizeHTML.js");
 
 exports.getUsers = async (req,res,next) => {
     const userId = parseInt(req.user.id);
@@ -85,10 +86,15 @@ exports.updateMyProfil = async (req,res,next) => {
     }
 
     const newUser = req.body;
+
+    const newUserCleaned = {
+        email: sanitizeHTML(newUser.email),
+        username: sanitizeHTML(newUser.username),
+    }
     const userId = parseInt(req.user.id);
 
     try {
-        await db.updateProfile(userId, newUser);
+        await db.updateProfile(userId, newUserCleaned);
         res.status(200).json({message: "Profile successfully updated."});
     } catch(err){
         next(err)
@@ -103,7 +109,7 @@ exports.updatePassword = async (req,res,next) => {
     }
 
     const userId = parseInt(req.user.id);
-    const newPassword = req.body.password;
+    const newPassword = sanitizeHTML(req.body.password);
 
     if(!newPassword) {
         return res.status(400).json({errors: [{msg: "Insert a password"}]})

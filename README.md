@@ -38,6 +38,7 @@ User can:
 - Prisma
 - JWT Authentication
 - Refresh Token (HttpOnly Cookies)
+- Use of DOMPurify and sanitize
 
 ### Database
 

@@ -3,6 +3,7 @@ const db = require("../services/queries.js")
 const auth = require("../services/authServices.js")
 const bcrypt = require("bcryptjs")
 const {validationResult} = require("express-validator")
+const sanitizeHTML = require("../utils/sanitizeHTML.js");
 
 exports.register = async (req, res, next) => {
     const errors = validationResult(req);
@@ -13,12 +14,18 @@ exports.register = async (req, res, next) => {
 
     const newUser = req.body;
 
-    if(!newUser.username || !newUser.email || !newUser.password){
+    const newUserCLeaned = {
+        username: sanitizeHTML(newUser.username),
+        email: sanitizeHTML(newUser.email),
+        password: sanitizeHTML(newUser.password),
+    }
+
+    if(!newUserCLeaned.username || !newUserCLeaned.email || !newUserCLeaned.password){
         return res.status(400).json({errors: [{msg: "Insert a username, an email and a password."}]})
     }
 
     try {
-        const newAccount = await db.createAccount(newUser);
+        const newAccount = await db.createAccount(newUserCLeaned);
         return res.status(201).json(newAccount)
     } catch(err){
         next(err);

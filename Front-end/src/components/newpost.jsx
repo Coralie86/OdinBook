@@ -33,6 +33,7 @@ function Newpost() {
       await createPost(auth, setAuth, html)
       navigate('/app/posts')
     } catch(err) {
+      console.log(err)
       setErrors(err)
     }
   }

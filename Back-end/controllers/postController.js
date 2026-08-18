@@ -1,5 +1,6 @@
 const db = require("../services/queries.js")
 const {validationResult} = require("express-validator")
+const sanitizeHTML = require("../utils/sanitizeHTML.js");
 
 exports.createPost = async (req, res, next) => {
     const errors = validationResult(req);
@@ -9,14 +10,15 @@ exports.createPost = async (req, res, next) => {
     }
     
     const postContent = req.body.content;
-    console.log(postContent)
 
-    if(!postContent){
+    const postContentCleaned = sanitizeHTML(postContent)
+
+    if(!postContentCleaned){
         return res.status(400).json({errors: [{msg: "Insert a content."}]});
     }
 
     try {
-        const newPost = await db.createPost(postContent, req.user.id);
+        const newPost = await db.createPost(postContentCleaned, req.user.id);
         return res.status(201).json(newPost);
     } catch(err){
         next(err);
@@ -93,7 +95,8 @@ exports.commentPost = async (req,res,next) => {
 
     const postId = parseInt(req.params.postId);
     const userId = parseInt(req.user.id);
-    const content = req.body.description;
+    const content = sanitizeHTML(req.body.description);
+
 
     if(!postId){
         return res.status(404).json({errors: [{msg: "Resource not found."}]})
