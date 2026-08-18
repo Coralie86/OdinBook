@@ -6,7 +6,7 @@ import { AuthContext } from '../services/authContext'
 import { TiTickOutline } from "react-icons/ti";
 import { TiCancel } from "react-icons/ti";
 import { editComment } from '../services/commentServices';
-import Errors from "./errorpage.jsx"
+import Errors from "./errors.jsx"
 import Modal from './modal.jsx';
 
 function Comment({comment, deleteComment}) {

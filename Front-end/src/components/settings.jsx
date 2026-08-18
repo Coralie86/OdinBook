@@ -7,7 +7,7 @@ import { AuthContext } from '../services/authContext';
 import { getUserInfo, updateUserInfo, updatePassword} from "../services/settingsServices.js"
 import {logout} from "../services/authServices.js"
 import { useNavigate } from 'react-router-dom';
-import Errors from "./errorpage.jsx"
+import Errors from "./errors.jsx"
 import Modal from './modal.jsx';
 
 function Settings() {

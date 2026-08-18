@@ -15,7 +15,7 @@ import { AuthContext } from '../services/authContext'
 import {likePost, unlikePost, addComment} from "../services/postServices.js"
 import {deleteComment} from "../services/commentServices.js"
 import DOMPurify from "dompurify";
-import Errors from "./errorpage.jsx"
+import Errors from "./errors.jsx"
 
 function Post({post}) {
     const {auth,setAuth} = useContext(AuthContext);

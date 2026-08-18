@@ -44,11 +44,11 @@ export const updateUserInfo = async (auth, setAuth, {username, email, image}) =>
         body: JSON.stringify(user)
     }, auth, setAuth)
 
+    const data = await response.json();
+
     if(!response.ok){
         throw data.errors;
-    }
-
-    const data = await response.json();
+    }   
 
     return data
 }

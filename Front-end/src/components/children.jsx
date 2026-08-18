@@ -4,12 +4,11 @@ import Newpost from "./newpost.jsx"
 import Listpost from "./listpost.jsx"
 import Settings from "./settings.jsx"
 import UserList from "./usersList.jsx"
-import Errorpage from "./errorpage.jsx"
 import { useParams } from 'react-router-dom'
+import ErrorPage from './errorpage.jsx'
 
 function Children() {
   const {page} = useParams();
-
 
   return(
     <>
@@ -17,7 +16,7 @@ function Children() {
       : page == 'posts' ? (<Listpost />)
       : page == 'newpost' ? (<Newpost />)
       : page == 'settings' ? (<Settings />)
-      : (<Errorpage />)
+      : (<ErrorPage />)
       }
     </>
   )

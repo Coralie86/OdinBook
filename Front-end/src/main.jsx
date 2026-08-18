@@ -9,12 +9,17 @@ import Navbar from "./components/navbar.jsx"
 import Connect from "./components/connect.jsx"
 import {AuthProvider} from './services/authContext.jsx'
 import ProtectedRoute from './components/protectedRoute.jsx'
+import ErrorPage from './components/errorpage.jsx'
 
 
 const router = createBrowserRouter([
   {
     path:"/",
     element:<Connect />,
+  },
+  {
+    path:"/:page",
+    element:<ErrorPage />,
   },
   {
     element: <ProtectedRoute />,
@@ -28,7 +33,11 @@ const router = createBrowserRouter([
         ],
       },
     ],
-  },  
+  }, 
+  {
+    path:"*",
+    element:<ErrorPage />,
+  },
 ])
 
 createRoot(document.getElementById('root')).render(

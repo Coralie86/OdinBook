@@ -5,7 +5,7 @@ import style from "../styles/newPost.module.css"
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../services/authContext';
 import {createPost} from "../services/newpostServices.js"
-import Errors from "./errorpage.jsx"
+import Errors from "./errors.jsx"
 
 function Newpost() {
   const editorRef = useRef(null);

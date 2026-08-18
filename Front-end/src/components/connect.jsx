@@ -4,7 +4,7 @@ import wanted from "../assets/wanted.png"
 import { Link, useNavigate } from 'react-router-dom'
 import {register, login, loginGuest} from "../services/authServices.js"
 import { AuthContext } from '../services/authContext.jsx'
-import Errors from "./errorpage.jsx"
+import Errors from "./errors.jsx"
 
 function Connect() {
     const navigate = useNavigate();

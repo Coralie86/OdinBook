@@ -1,0 +1,23 @@
+.errorPage {
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    align-items: center;
+}
+
+.errorContainer {
+    margin: 20px;
+    color: white;
+    text-align: center;
+}
+
+.errorContainer > a {
+    color: white;
+    text-decoration: underline;
+}
+.errorContainer > a:hover {
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 24px;
+}
