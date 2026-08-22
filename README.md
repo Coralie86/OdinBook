@@ -1,6 +1,7 @@
 # 🤠 Far West Social Network
 
 A social network inspired by the American Wild West.
+This project was built as part of The Odin Project React curriculum.
 
 User can:
 - create an account, login;
@@ -92,3 +93,7 @@ VITE_API_URL=
 ## Improvements
 
 - Let the user to select another profile image
+
+## Credits
+
+Project idea and requirements: The Odin Project: https://www.theodinproject.com/
