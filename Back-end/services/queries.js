@@ -8,6 +8,7 @@ async function createAccount({username, email, password}){
             username: username,
             email: email,
             password: await bcrypt.hash(password, 10),
+            image: "https://media.istockphoto.com/id/2151669184/vector/vector-flat-illustration-in-grayscale-avatar-user-profile-person-icon-gender-neutral.jpg?s=612x612&w=0&k=20&c=UEa7oHoOL30ynvmJzSCIPrwwopJdfqzBs0q69ezQoM8="
         }
     });
 
