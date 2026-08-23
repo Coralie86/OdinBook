@@ -4,6 +4,7 @@ const authValidator = require("../controllers/validations/authValidation.js")
 
 const authRouter = Router();
 
+authRouter.get('/health', authController.wakeUpServer)
 authRouter.post('/register', authValidator.registerValidator, authController.register)
 authRouter.post('/login', authValidator.loginValidator, authController.login)
 authRouter.post('/login-guest', authController.loginGuest)

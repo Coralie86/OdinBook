@@ -5,6 +5,10 @@ const bcrypt = require("bcryptjs")
 const {validationResult} = require("express-validator")
 const sanitizeHTML = require("../utils/sanitizeHTML.js");
 
+exports.wakeUpServer = async (req, res, next) => {
+    return res.status(200).json({status: "ok"})
+}
+
 exports.register = async (req, res, next) => {
     const errors = validationResult(req);
 

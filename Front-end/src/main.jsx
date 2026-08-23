@@ -10,11 +10,16 @@ import Connect from "./components/connect.jsx"
 import {AuthProvider} from './services/authContext.jsx'
 import ProtectedRoute from './components/protectedRoute.jsx'
 import ErrorPage from './components/errorpage.jsx'
+import ServerWakeUp from './components/serverWakeUp.jsx'
 
 
 const router = createBrowserRouter([
   {
     path:"/",
+    element:<ServerWakeUp />,
+  },
+  {
+    path:"/login",
     element:<Connect />,
   },
   {
