@@ -53,8 +53,8 @@ export const updateUserInfo = async (auth, setAuth, {username, email, image}) =>
     return data
 }
 
-export const updatePassword = async (auth, setAuth, form) => {    
-    console.log(Object.fromEntries(form.entries()))
+export const updatePassword = async (auth, setAuth, form) => {
+    
     const response = await authFetch(`${API_URL}/users/me/password`, {
         method: "PUT",
         headers: {

@@ -84,6 +84,13 @@ button:hover {
     border-radius: 10px;
 }
 
+.loading {
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    text-align: center;
+}
+
 @media (max-width: 1200px) {
     .listuser {
         width: 90vw;

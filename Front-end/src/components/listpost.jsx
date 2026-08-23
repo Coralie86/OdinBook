@@ -14,6 +14,7 @@ function Listpost() {
     search: null,
     btn:null
   })
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -24,6 +25,8 @@ function Listpost() {
         setListPost(response.postList);
       } catch(err) {
         console.log(err)
+      } finally {
+        setLoading(false);
       }
     }
 
@@ -83,6 +86,9 @@ function Listpost() {
         <button id="resetBtn" className={style.reset} onClick={handlereset}>RESET</button>
       </div>
       <div className={style.listpost}>
+        {loading && (
+          <p className={style.loading}>Loading List</p>
+        )}
         {listPost.map(post => {
           return (
             <Post key={post.id} post={post} />

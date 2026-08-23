@@ -93,12 +93,19 @@ button:hover {
     border: none;
 }
 
+.loading {
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+}
+
 
 @media (max-width: 1200px) {
     .listpost {
         width: 90vw;
         margin: 0px;
         padding: 20px 0px;
+        align-items: center;
     }
     .filters {
         display: flex;
