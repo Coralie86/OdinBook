@@ -65,12 +65,19 @@ function Settings() {
       localStorage.removeItem("accessToken");
       await logout();
       navigate('/');
+      setErrors({...errors,
+          password: [],
+          profila: []
+        })
+      setSuccess(false);
 
     } catch(err){
       setErrors({
         ...errors,
-        profile: err
+        profile: err,
+        password: []
       })
+      setSuccess(false);
     }    
   }  
 
@@ -85,12 +92,18 @@ function Settings() {
     } else {
       try {
         await updatePassword(auth, setAuth, formData);
+        setErrors({...errors,
+          password: [],
+          profile: []
+        })
         setSuccess(true);
       } catch(err) {
         setErrors({
           ...errors,
-          password: err
+          password: err,
+          profile: []
         })
+        setSuccess(false);
       }
     }
     
@@ -153,8 +166,8 @@ function Settings() {
       <div className={style.passwordUpdate} >
         <h1 className={style.headersProfile}>UPDATE YOUR PASSWORD</h1>
         <form className={style.formPassword} method="put" onSubmit={handleChangePassword}>
-          <input name="password" id="password" type="password" required/>
-          <input name="passwordConfirmation" id="passwordConfirmation" type="password" required/>
+          <input name="password" id="password" type="password" placeholder="Insert new password" required/>
+          <input name="passwordConfirmation" id="passwordConfirmation" placeholder="Confirm new password" type="password" required/>
           <button className={style.submitBtn} type="submit" >UPDATE PASSWORD</button>
         </form>
         {errors.password.length > 0 &&

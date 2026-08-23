@@ -92,12 +92,26 @@ input:hover {
     display: flex;
 }
 
+.success {
+    background-color: #e5d39c;
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px; 
+    box-shadow: 0px 0px 10px 5px rgb(73, 36, 6);
+    font-size: 16px;
+    font-family: Arial;
+    line-height: 30px;
+    margin-right: 30px;
+    margin-bottom: 50px;
+    margin-left: 20px;
+}
+
 
 @media (max-width: 1250px) {
   .login {
     background-position: center;
     background-size: 351px 800px;
-    grid-template-rows: 16vh 26vh 12vh;
+    grid-template-rows: 5vh 23vh 12vh;
+    padding-bottom: 100px;
   }
   .formLogin {
     padding-bottom: 20px;
@@ -119,6 +133,7 @@ input:hover {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 20px;
     align-items: center;
     margin: 0px;
   }

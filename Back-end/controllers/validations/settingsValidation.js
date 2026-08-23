@@ -13,7 +13,7 @@ const passwordValidator = [
     .matches(/[A-Z]/).withMessage("Password must contain at least a capital letter.")
     .matches(/\d/).withMessage("Password must contain at least a number.")
     .matches(/[^A-Za-z0-9]/).withMessage("Password must contain at least a special character."),
-    body('confirmPassword').trim()
+    body('passwordConfirmation').trim()
     .custom( (value, {req}) =>{
         if (value != req.body.password){
             throw new Error("Confirmation Password must be equal to Password.")

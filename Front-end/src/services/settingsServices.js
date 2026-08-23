@@ -54,7 +54,7 @@ export const updateUserInfo = async (auth, setAuth, {username, email, image}) =>
 }
 
 export const updatePassword = async (auth, setAuth, form) => {    
-    
+    console.log(Object.fromEntries(form.entries()))
     const response = await authFetch(`${API_URL}/users/me/password`, {
         method: "PUT",
         headers: {

@@ -103,8 +103,14 @@
 }
 
 .success {
-    color: white;
-    font-size: 20px;
+    align-self: center;
+    background-color: #e5d39c;
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px; 
+    box-shadow: 0px 0px 10px 5px rgb(73, 36, 6);
+    font-size: 16px;
+    font-family: Arial;
+    line-height: 30px;
 }
 
 @media (max-width: 1200px) {
